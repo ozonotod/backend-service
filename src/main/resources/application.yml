@@ -1,0 +1,41 @@
+server:
+    port: 8080
+
+spring:
+  application:
+    name: backend-template
+
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+    
+  jackson:
+      serialization:
+        write-dates-as-timestamps: false
+      time-zone: GMT-7
+      mapper:
+        default-view-inclusion: true
+        
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:template-db}?useTimezone=true&serverTimezone=GMT-7
+    username: ${DB_USER:root}
+    password: ${DB_PASS:password}
+    
+  jpa:
+      show-sql: false
+      hibernate:
+            naming:
+              physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      database-platform: org.hibernate.dialect.MySQL5Dialect
+      properties:
+            hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
+            hibernate.format_sql: false
+            hibernate.show_sql: false
+
+logging:
+  level:
+    root: ${LOG_LEVEL:INFO}
+    io.lkmx.template: ${APP_LOG_LEVEL:DEBUG}
+

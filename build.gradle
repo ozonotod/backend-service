@@ -1,0 +1,40 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+    id 'com.google.cloud.tools.jib' version '1.6.1'
+}
+
+group = 'io.lkmx'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+}
+
+jib {
+    from {
+        image = 'openjdk:8-jre-alpine'
+    }
+    to {
+        image = 'masamune.lkmx.io/codebases/backend-template:latest'
+    }
+    container {
+        jvmFlags = ['-server', '-XX:+UseConcMarkSweepGC', '-XX:+CMSParallelRemarkEnabled', '-XX:+ScavengeBeforeFullGC', '-XX:+CMSScavengeBeforeRemark', '-XX:MinHeapFreeRatio=20', '-XX:MaxHeapFreeRatio=40', '-XX:GCTimeRatio=4', '-XX:AdaptiveSizePolicyWeight=90', '-Xms40M', '-Xmx256M']
+        ports = ['8080']
+        creationTime = 'USE_CURRENT_TIMESTAMP'
+    }
+}
