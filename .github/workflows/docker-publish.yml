@@ -21,7 +21,7 @@ jobs:
   # Run tests.
   # See also https://docs.docker.com/docker-hub/builds/automated-testing/
   build:
-    runs-on: openjdk:8-jre-alpine
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
